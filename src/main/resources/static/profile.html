@@ -1,0 +1,159 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Campus Achieve - Digital Portfolio</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f4f6fb;
+            margin: 0;
+            color: #222;
+        }
+
+        header {
+            background: #172554;
+            color: white;
+            padding: 25px 8%;
+        }
+
+        .container {
+            max-width: 950px;
+            margin: 35px auto;
+            padding: 20px;
+        }
+
+        .profile-card, .certificate {
+            background: white;
+            padding: 25px;
+            margin-bottom: 20px;
+            border-radius: 12px;
+            box-shadow: 0 3px 12px #00000010;
+        }
+
+        h2 {
+            color: #172554;
+        }
+
+        .certificate-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 18px;
+        }
+
+        .view-btn {
+            display: inline-block;
+            background: #2563eb;
+            color: white;
+            padding: 10px 16px;
+            text-decoration: none;
+            border-radius: 6px;
+        }
+
+        footer {
+            text-align: center;
+            padding: 25px;
+            color: #64748b;
+        }
+    </style>
+</head>
+
+<body>
+
+<header>
+    <h1>Campus Achieve</h1>
+    <p>Your Achievements. Your Identity. Your Digital Portfolio.</p>
+</header>
+
+<div class="container">
+
+    <div class="profile-card">
+        <h2 id="name">Loading...</h2>
+        <p id="department"></p>
+    </div>
+
+    <h2>My Certificates</h2>
+
+    <div id="certificates" class="certificate-grid">
+        Loading certificates...
+    </div>
+
+</div>
+
+<footer>
+    © 2026 Campus Achieve
+</footer>
+
+<script>
+    const userId = new URLSearchParams(
+        window.location.search
+    ).get("id");
+
+    async function loadProfile() {
+        const container = document.getElementById("certificates");
+
+        if (!userId || !/^\d+$/.test(userId)) {
+            container.textContent = "Invalid profile link.";
+            return;
+        }
+
+        try {
+            const response = await fetch(
+                `/api/users/${userId}/profile`
+            );
+
+            if (!response.ok) {
+                throw new Error("Profile not found");
+            }
+
+            const user = await response.json();
+
+            document.getElementById("name").textContent = user.name;
+            document.getElementById("department").textContent =
+                user.department || "Department not specified";
+
+            container.innerHTML = "";
+
+            if (!user.achievements || user.achievements.length === 0) {
+                container.textContent = "No certificates uploaded yet.";
+                return;
+            }
+
+            user.achievements.forEach(item => {
+                const card = document.createElement("div");
+                card.className = "certificate";
+
+                const title = document.createElement("h3");
+                title.textContent = item.title;
+
+                const category = document.createElement("p");
+                category.textContent = "Category: " + item.category;
+
+                const date = document.createElement("p");
+                date.textContent = "Date: " +
+                    (item.achievementDate || "Not specified");
+
+                const link = document.createElement("a");
+                link.className = "view-btn";
+                link.href = item.certificateUrl;
+                link.target = "_blank";
+                link.rel = "noopener";
+                link.textContent = "View Certificate";
+
+                card.append(title, category, date, link);
+                container.appendChild(card);
+            });
+
+        } catch (error) {
+            container.textContent = "Unable to load profile.";
+        }
+    }
+
+    loadProfile();
+</script>
+
+</body>
+</html>

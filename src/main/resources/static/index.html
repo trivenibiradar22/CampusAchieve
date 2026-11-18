@@ -1,0 +1,370 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Campus Achieve | Your Achievements, Your Future</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+          rel="stylesheet">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+          rel="stylesheet">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #f8f9ff;
+            color: #172554;
+        }
+
+        .navbar {
+            background: white;
+            padding: 18px 7%;
+            box-shadow: 0 2px 15px rgba(0,0,0,0.04);
+        }
+
+        .brand {
+            font-size: 23px;
+            font-weight: 800;
+            color: #273c9b;
+        }
+
+        .brand span {
+            color: #7956e8;
+        }
+
+        .nav-link {
+            color: #475569;
+            font-weight: 500;
+            margin: 0 10px;
+        }
+
+        .btn-login {
+            border: 1px solid #273c9b;
+            color: #273c9b;
+            border-radius: 8px;
+            padding: 10px 23px;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .btn-register {
+            background: #273c9b;
+            color: white;
+            border-radius: 8px;
+            padding: 11px 23px;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .hero {
+            padding: 100px 8%;
+            min-height: 580px;
+            display: flex;
+            align-items: center;
+            background: linear-gradient(120deg, #f8f9ff, #eef0ff);
+        }
+
+        .hero h1 {
+            font-size: clamp(38px, 5vw, 60px);
+            font-weight: 800;
+            line-height: 1.15;
+            color: #172554;
+        }
+
+        .hero h1 span {
+            color: #7154df;
+        }
+
+        .hero p {
+            color: #64748b;
+            font-size: 17px;
+            line-height: 1.8;
+            margin: 22px 0 30px;
+            max-width: 540px;
+        }
+
+        .hero-btn {
+            display: inline-block;
+            background: #273c9b;
+            color: white;
+            padding: 15px 27px;
+            border-radius: 9px;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .hero-btn:hover, .btn-register:hover {
+            background: #7154df;
+            color: white;
+        }
+
+        .hero-image {
+            background: white;
+            border-radius: 22px;
+            padding: 30px;
+            box-shadow: 0 20px 55px rgba(39,60,155,0.12);
+            max-width: 450px;
+            margin: auto;
+        }
+
+        .preview-card {
+            padding: 18px;
+            border: 1px solid #e8eaff;
+            border-radius: 12px;
+            margin-top: 15px;
+            background: #fafaff;
+        }
+
+        .preview-icon {
+            background: #e9e5ff;
+            color: #7154df;
+            padding: 12px;
+            border-radius: 10px;
+            font-size: 23px;
+        }
+
+        .section {
+            padding: 80px 8%;
+        }
+
+        .section-title {
+            font-size: 34px;
+            font-weight: 800;
+            text-align: center;
+            margin-bottom: 12px;
+        }
+
+        .section-subtitle {
+            color: #64748b;
+            text-align: center;
+            margin-bottom: 45px;
+        }
+
+        .feature-card {
+            background: white;
+            padding: 30px;
+            height: 100%;
+            border-radius: 15px;
+            border: 1px solid #edf0fa;
+            transition: 0.3s;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 12px 30px rgba(39,60,155,0.09);
+        }
+
+        .feature-icon {
+            font-size: 30px;
+            margin-bottom: 18px;
+        }
+
+        .feature-card h5 {
+            font-weight: 700;
+            margin-bottom: 12px;
+        }
+
+        .feature-card p {
+            color: #64748b;
+            line-height: 1.7;
+        }
+
+        .cta {
+            margin: 30px 8% 80px;
+            padding: 55px 25px;
+            text-align: center;
+            border-radius: 20px;
+            color: white;
+            background: linear-gradient(120deg, #273c9b, #7956e8);
+        }
+
+        .cta h2 {
+            font-weight: 800;
+            margin-bottom: 15px;
+        }
+
+        .cta a {
+            display: inline-block;
+            background: white;
+            color: #273c9b;
+            text-decoration: none;
+            padding: 13px 25px;
+            border-radius: 8px;
+            font-weight: 700;
+            margin-top: 15px;
+        }
+
+        footer {
+            background: #111c42;
+            color: #cbd5e1;
+            padding: 28px 8%;
+            text-align: center;
+        }
+
+        @media(max-width: 768px) {
+            .hero {
+                padding: 65px 7%;
+                text-align: center;
+            }
+
+            .hero p {
+                margin-left: auto;
+                margin-right: auto;
+            }
+
+            .hero-image {
+                margin-top: 45px;
+            }
+
+            .section {
+                padding: 60px 7%;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<nav class="navbar navbar-expand-lg">
+    <div class="container-fluid">
+        <a class="navbar-brand brand" href="#">Campus<span>Achieve.</span></a>
+
+        <button class="navbar-toggler" type="button"
+                data-bs-toggle="collapse" data-bs-target="#navMenu">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navMenu">
+            <div class="navbar-nav mx-auto">
+                <a class="nav-link" href="#">Home</a>
+                <a class="nav-link" href="#features">Features</a>
+                <a class="nav-link" href="#about">About</a>
+            </div>
+
+            <div class="d-flex gap-3 mt-3 mt-lg-0">
+                <a href="/login.html" class="btn-login">Login</a>
+                <a href="/register.html" class="btn-register">Get Started</a>
+            </div>
+        </div>
+    </div>
+</nav>
+
+<section class="hero">
+    <div class="container-fluid">
+        <div class="row align-items-center">
+
+            <div class="col-lg-6">
+                <h1>
+                    Every Achievement
+                    Deserves to Be
+                    <span>Recognized.</span>
+                </h1>
+
+                <p>
+                    Store your certificates, showcase your skills and
+                    build your digital portfolio. One platform for all
+                    your academic and professional achievements.
+                </p>
+
+                <a href="/register.html" class="hero-btn">
+                    Create Your Portfolio →
+                </a>
+            </div>
+
+            <div class="col-lg-6">
+                <div class="hero-image">
+                    <h5 class="fw-bold mb-1">Your Achievement Space</h5>
+                    <p class="text-secondary small">Everything in one place</p>
+
+                    <div class="preview-card d-flex align-items-center gap-3">
+                        <div class="preview-icon">🏆</div>
+                        <div>
+                            <h6 class="fw-bold mb-1">Achievements</h6>
+                            <small class="text-secondary">Showcase your success</small>
+                        </div>
+                    </div>
+
+                    <div class="preview-card d-flex align-items-center gap-3">
+                        <div class="preview-icon">📜</div>
+                        <div>
+                            <h6 class="fw-bold mb-1">Digital Certificates</h6>
+                            <small class="text-secondary">Upload and manage certificates</small>
+                        </div>
+                    </div>
+
+                    <div class="preview-card d-flex align-items-center gap-3">
+                        <div class="preview-icon">📱</div>
+                        <div>
+                            <h6 class="fw-bold mb-1">Personal QR Portfolio</h6>
+                            <small class="text-secondary">Share your profile instantly</small>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+<section class="section" id="features">
+    <h2 class="section-title">Everything You Need</h2>
+    <p class="section-subtitle">
+        Manage, organize and showcase your achievements with ease.
+    </p>
+
+    <div class="row g-4">
+
+        <div class="col-md-4">
+            <div class="feature-card">
+                <div class="feature-icon">📂</div>
+                <h5>Certificate Management</h5>
+                <p>Upload, organize and access all your certificates from one dashboard.</p>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="feature-card">
+                <div class="feature-icon">🌐</div>
+                <h5>Digital Portfolio</h5>
+                <p>Create a professional portfolio to display your academic and technical achievements.</p>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="feature-card">
+                <div class="feature-icon">🔳</div>
+                <h5>Unique QR Code</h5>
+                <p>Share your portfolio using one personal QR code that stays the same as you add certificates.</p>
+            </div>
+        </div>
+
+    </div>
+</section>
+
+<section class="cta" id="about">
+    <h2>Your Achievements. Your Identity.</h2>
+    <p>Start building your digital achievement portfolio today.</p>
+    <a href="/register.html">Join Campus Achieve →</a>
+</section>
+
+<footer>
+    <h5 class="fw-bold text-white">Campus Achieve</h5>
+    <p class="mb-0">Connect. Showcase. Achieve.</p>
+    <small>© 2026 Campus Achieve. All rights reserved.</small>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+</body>
+</html>

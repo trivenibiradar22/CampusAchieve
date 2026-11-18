@@ -1,0 +1,812 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Faculty Dashboard</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --x-accent: #4f46e5;
+            --x-accent-dark: #4338ca;
+            --x-border: rgba(15, 23, 42, .08);
+            --x-muted: #64748b;
+            --x-bg: #f4f6fb;
+            --x-sidebar: #0f172a;
+        }
+        body { background: var(--x-bg); color: #0f172a; font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+
+        /* Layout */
+        .sidebar {
+            position: fixed; inset: 0 auto 0 0; width: 250px; background: var(--x-sidebar);
+            color: #cbd5e1; padding: 1.25rem 1rem; display: flex; flex-direction: column; z-index: 100;
+        }
+        .brand { font-weight: 700; color: #fff; font-size: 1.15rem; padding: .25rem .75rem 1.25rem; }
+        .nav-item-custom {
+            display: flex; align-items: center; gap: .75rem; padding: .65rem .85rem; margin-bottom: .2rem;
+            border-radius: 10px; color: #cbd5e1; cursor: pointer; user-select: none; transition: background .15s, color .15s;
+        }
+        .nav-item-custom:hover { background: rgba(255, 255, 255, .07); color: #fff; }
+        .nav-item-custom.active { background: var(--x-accent); color: #fff; }
+        .sidebar .logout { margin-top: auto; }
+        .main { margin-left: 250px; padding: 1.5rem 2rem 3rem; }
+        .topbar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; }
+        .user-avatar, .avatar-sm {
+            display: grid; place-items: center; border-radius: 50%; background: var(--x-accent); color: #fff; font-weight: 700;
+        }
+        .user-avatar { width: 64px; height: 64px; font-size: 1.6rem; }
+        .avatar-sm { width: 40px; height: 40px; }
+        .section { display: none; }
+        .section.active { display: block; }
+        @media (max-width: 991px) {
+            .sidebar { position: static; width: 100%; flex-direction: row; flex-wrap: wrap; gap: .25rem; }
+            .brand { width: 100%; padding-bottom: .5rem; }
+            .sidebar .logout { margin-top: 0; }
+            .main { margin-left: 0; padding: 1rem; }
+        }
+
+        /* Cards & buttons */
+        .content-card, .stat-card, .cluster-card, .profile-edit-card {
+            background: #fff; border: 1px solid var(--x-border); border-radius: 14px; padding: 1.25rem;
+        }
+        .profile-edit-card { margin-top: 1rem; }
+        .stat-card h6 { color: var(--x-muted); font-weight: 500; margin-bottom: .5rem; }
+        .stat-card h3 { font-weight: 700; margin: 0; }
+        .muted { color: var(--x-muted); }
+        .btn-primary-custom { background: var(--x-accent); color: #fff; border: 0; border-radius: 10px; padding: .55rem 1.1rem; }
+        .btn-primary-custom:hover { background: var(--x-accent-dark); color: #fff; }
+        .btn-primary-custom:disabled { opacity: .6; }
+        .table > :not(caption) > * > * { padding: .75rem .9rem; }
+        .table thead th { color: var(--x-muted); font-weight: 600; font-size: .85rem; border-bottom-width: 1px; }
+
+        /* Table toolbar */
+        .table-toolbar { display: flex; gap: .5rem; flex-wrap: wrap; margin-bottom: .75rem; }
+        .table-toolbar input { max-width: 260px; }
+        .table-toolbar select { max-width: 200px; }
+
+        /* Skeletons */
+        .skeleton {
+            display: block; height: 14px; border-radius: 6px; width: 80%;
+            background: linear-gradient(90deg, #e9edf3 25%, #f5f7fa 50%, #e9edf3 75%);
+            background-size: 200% 100%; animation: x-shimmer 1.2s infinite linear;
+        }
+        .skeleton-block { height: 140px; width: 100%; }
+        @keyframes x-shimmer { to { background-position: -200% 0; } }
+
+        /* Empty / error rows */
+        .state-row td { text-align: center; padding: 1.75rem 1rem !important; color: var(--x-muted); }
+        .state-row.is-error td { color: #dc2626; }
+
+        /* Toasts */
+        .toast-stack { position: fixed; right: 1rem; bottom: 1rem; display: grid; gap: .5rem; z-index: 2000; }
+        .toast-item {
+            background: #0f172a; color: #fff; padding: .7rem 1rem; border-radius: 10px;
+            border-left: 4px solid #22c55e; box-shadow: 0 8px 24px rgba(15, 23, 42, .25);
+            animation: x-toast-in .2s ease-out; max-width: 340px;
+        }
+        .toast-item.toast-error { border-left-color: #ef4444; }
+        @keyframes x-toast-in { from { transform: translateY(8px); opacity: 0; } }
+
+        /* Certificate preview */
+        .preview-overlay {
+            position: fixed; inset: 0; background: rgba(15, 23, 42, .6); z-index: 1900;
+            display: grid; place-items: center; padding: 1rem;
+        }
+        .preview-overlay[hidden] { display: none; }
+        .preview-box { background: #fff; border-radius: 14px; width: min(900px, 100%); max-height: 92vh; display: flex; flex-direction: column; overflow: hidden; }
+        .preview-head { display: flex; justify-content: space-between; align-items: center; padding: .75rem 1rem; border-bottom: 1px solid var(--x-border); }
+        .preview-body { overflow: auto; padding: 1rem; min-height: 200px; }
+        .preview-body img { max-width: 100%; display: block; margin: 0 auto; }
+        .preview-body iframe { width: 100%; height: 70vh; border: 0; }
+
+        /* Reports */
+        .chart-wrap { position: relative; height: 280px; }
+        .coverage-track { height: 8px; background: #e9edf3; border-radius: 99px; overflow: hidden; margin-top: .5rem; }
+        .coverage-track i { display: block; height: 100%; width: 0; background: var(--x-accent); transition: width .6s ease; }
+        .rank-row { display: grid; grid-template-columns: minmax(90px, 1.2fr) 2fr auto; gap: .75rem; align-items: center; padding: .4rem 0; }
+        .rank-bar { height: 8px; background: #e9edf3; border-radius: 99px; overflow: hidden; }
+        .rank-bar i { display: block; height: 100%; background: var(--x-accent); border-radius: 99px; }
+
+        /* Clusters */
+        .cluster-card.has-accent { border-top: 4px solid var(--accent, var(--x-accent)); }
+        .kw-chip {
+            display: inline-block; padding: .15rem .6rem; margin: 0 .25rem .35rem 0; border-radius: 99px;
+            font-size: .8rem; background: color-mix(in srgb, var(--accent, var(--x-accent)) 12%, white);
+            color: var(--accent, var(--x-accent));
+        }
+        .mini-avatar {
+            display: inline-grid; place-items: center; width: 24px; height: 24px; border-radius: 50%;
+            background: var(--accent, var(--x-accent)); color: #fff; font-size: .7rem; margin-right: .5rem;
+        }
+        .cluster-list { list-style: none; padding: 0; margin: 0; max-height: 220px; overflow: auto; }
+        .cluster-list li { padding: .25rem 0; display: flex; align-items: center; }
+
+        /* Share profile */
+        .qr-box { background: #fff; padding: 10px; border: 1px solid var(--x-border); border-radius: 12px; display: inline-block; }
+
+        /* Focus + reduced motion */
+        .btn:focus-visible, .form-control:focus-visible, .form-select:focus-visible, .nav-item-custom:focus-visible {
+            outline: 3px solid color-mix(in srgb, var(--x-accent) 45%, transparent); outline-offset: 2px;
+        }
+        @media (prefers-reduced-motion: reduce) {
+            .skeleton, .toast-item { animation: none; }
+            .coverage-track i { transition: none; }
+        }
+    </style>
+</head>
+<body>
+
+<aside class="sidebar">
+    <div class="brand"><i class="bi bi-mortarboard-fill"></i> Achievement Portal</div>
+    <div class="nav-item-custom active" tabindex="0" onclick="showSection('dashboard', this)"><i class="bi bi-speedometer2"></i> Dashboard</div>
+    <div class="nav-item-custom" tabindex="0" onclick="showSection('students', this)"><i class="bi bi-people"></i> Students</div>
+    <div class="nav-item-custom" tabindex="0" onclick="showSection('studentAchievements', this)"><i class="bi bi-trophy"></i> Student Achievements</div>
+    <div class="nav-item-custom" tabindex="0" onclick="showSection('facultyAchievements', this)"><i class="bi bi-award"></i> Faculty Achievements</div>
+    <div class="nav-item-custom" tabindex="0" onclick="showSection('uploadAchievement', this)"><i class="bi bi-cloud-upload"></i> Upload Achievement</div>
+    <div class="nav-item-custom" tabindex="0" onclick="showSection('insights', this)"><i class="bi bi-stars"></i> AI Insights</div>
+    <div class="nav-item-custom" tabindex="0" onclick="showSection('reports', this)"><i class="bi bi-bar-chart-line"></i> Reports</div>
+    <div class="nav-item-custom" tabindex="0" onclick="showSection('profile', this)"><i class="bi bi-person-circle"></i> My Profile</div>
+    <div class="nav-item-custom logout" tabindex="0" onclick="logout()"><i class="bi bi-box-arrow-left"></i> Logout</div>
+</aside>
+
+<main class="main">
+    <header class="topbar">
+        <h4 id="welcomeName" class="fw-bold mb-0">Welcome, Faculty!</h4>
+        <div class="avatar-sm" id="avatar">F</div>
+    </header>
+
+    <!-- DASHBOARD -->
+    <section id="dashboard" class="section active">
+        <div class="row g-3">
+            <div class="col-sm-6 col-xl-3"><div class="stat-card"><h6>Total Students</h6><h3 id="totalStudents">0</h3></div></div>
+            <div class="col-sm-6 col-xl-3"><div class="stat-card"><h6>Departments</h6><h3 id="totalDepartments">0</h3></div></div>
+            <div class="col-sm-6 col-xl-3"><div class="stat-card"><h6>Total Achievements</h6><h3 id="totalAchievements">0</h3></div></div>
+            <div class="col-sm-6 col-xl-3"><div class="stat-card"><h6>Student Groups</h6><h3 id="totalClusters">0</h3></div></div>
+        </div>
+        <div class="content-card mt-3">
+            <h5>Get started</h5>
+            <p class="muted mb-0">Browse your students and their achievements, upload your own records, or generate AI groups from the AI Insights page.</p>
+        </div>
+    </section>
+
+    <!-- STUDENTS -->
+    <section id="students" class="section">
+        <h4 class="fw-bold mb-3">Students</h4>
+        <div class="content-card">
+            <div class="table-responsive">
+                <table class="table align-middle mb-0">
+                    <thead><tr><th>ID</th><th>Name</th><th>Department</th></tr></thead>
+                    <tbody id="studentTable"></tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+
+    <!-- STUDENT ACHIEVEMENTS -->
+    <section id="studentAchievements" class="section">
+        <h4 class="fw-bold mb-3">Student Achievements</h4>
+        <div class="content-card">
+            <div class="table-responsive">
+                <table class="table align-middle mb-0">
+                    <thead><tr><th>Student</th><th>Title</th><th>Category</th><th>Date</th><th>Certificate</th></tr></thead>
+                    <tbody id="studentAchievementTable"></tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+
+    <!-- FACULTY ACHIEVEMENTS -->
+    <section id="facultyAchievements" class="section">
+        <h4 class="fw-bold mb-3">Faculty Achievements</h4>
+        <div class="content-card">
+            <div class="table-responsive">
+                <table class="table align-middle mb-0">
+                    <thead><tr><th>Faculty</th><th>Title</th><th>Category</th><th>Date</th><th>Certificate</th></tr></thead>
+                    <tbody id="facultyAchievementTable"></tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+
+    <!-- UPLOAD FACULTY ACHIEVEMENT -->
+    <section id="uploadAchievement" class="section">
+        <h4 class="fw-bold mb-3">Upload Achievement</h4>
+        <div class="content-card">
+            <form id="facultyAchievementForm">
+                <div class="row g-3">
+                    <div class="col-md-6">
+                        <label for="facultyTitle" class="form-label">Title</label>
+                        <input id="facultyTitle" type="text" class="form-control" required>
+                    </div>
+                    <div class="col-md-6">
+                        <label for="facultyCategory" class="form-label">Category</label>
+                        <select id="facultyCategory" class="form-select" required>
+                            <option value="">Select a category</option>
+                            <option>Research Paper</option>
+                            <option>Publication</option>
+                            <option>Conference</option>
+                            <option>Workshop</option>
+                            <option>Award</option>
+                            <option>Certification</option>
+                            <option>Other</option>
+                        </select>
+                    </div>
+                    <div class="col-md-6">
+                        <label for="facultyDate" class="form-label">Date</label>
+                        <input id="facultyDate" type="date" class="form-control" required>
+                    </div>
+                    <div class="col-12">
+                        <label for="facultyDescription" class="form-label">Description</label>
+                        <textarea id="facultyDescription" class="form-control" rows="3"></textarea>
+                    </div>
+                    <div class="col-12">
+                        <label for="facultyFile" class="form-label">Certificate / Document</label>
+                        <input id="facultyFile" type="file" class="form-control" accept=".pdf,.jpg,.jpeg,.png" required>
+                        <small class="text-muted">PDF, JPG, JPEG or PNG, up to 5 MB</small>
+                    </div>
+                </div>
+                <button type="submit" id="facultyUploadButton" class="btn btn-primary-custom mt-3">
+                    <i class="bi bi-cloud-upload"></i> Upload Achievement
+                </button>
+                <p id="facultyUploadMessage" class="mt-3 mb-0"></p>
+            </form>
+        </div>
+    </section>
+
+    <!-- AI INSIGHTS -->
+    <section id="insights" class="section">
+        <h4 class="fw-bold">AI Insights</h4>
+        <div class="content-card">
+            <h5>Student Clustering</h5>
+            <p class="muted">Group students by what they have achieved, so you can spot similar interests and gaps.</p>
+            <div class="row align-items-end">
+                <div class="col-md-4">
+                    <label for="clusterCount" class="form-label">Number of Clusters</label>
+                    <select id="clusterCount" class="form-select">
+                        <option value="2">2 Clusters</option>
+                        <option value="3" selected>3 Clusters</option>
+                        <option value="4">4 Clusters</option>
+                        <option value="5">5 Clusters</option>
+                    </select>
+                </div>
+                <div class="col-md-4">
+                    <button id="clusterButton" class="btn btn-primary-custom" onclick="loadClusters()">
+                        <i class="bi bi-diagram-3"></i> Generate Clusters
+                    </button>
+                </div>
+            </div>
+            <div id="clusterResults" class="row g-3 mt-3"></div>
+        </div>
+    </section>
+
+    <!-- REPORTS -->
+    <section id="reports" class="section">
+        <div class="d-flex justify-content-between align-items-center mb-3">
+            <h4 class="fw-bold mb-0">Reports</h4>
+            <button class="btn btn-outline-secondary btn-sm" onclick="exportCSV()">
+                <i class="bi bi-download"></i> Export CSV
+            </button>
+        </div>
+        <div class="content-card">
+            <h5>Achievement Summary</h5>
+            <div class="row g-3">
+                <div class="col-md-4">
+                    <div class="stat-card"><h6>Student Achievements</h6><h3 id="reportStudentCount">0</h3></div>
+                </div>
+                <div class="col-md-4">
+                    <div class="stat-card"><h6>Faculty Achievements</h6><h3 id="reportFacultyCount">0</h3></div>
+                </div>
+                <div class="col-md-4">
+                    <div class="stat-card">
+                        <h6>Backed by a certificate</h6>
+                        <h3 id="coverageText">0%</h3>
+                        <div class="coverage-track"><i id="coverageBar"></i></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row g-3 mt-1">
+            <div class="col-lg-5">
+                <div class="content-card h-100">
+                    <h5>By category</h5>
+                    <div class="chart-wrap"><canvas id="categoryChart" aria-label="Achievements by category"></canvas></div>
+                </div>
+            </div>
+            <div class="col-lg-7">
+                <div class="content-card h-100">
+                    <h5>By year</h5>
+                    <div class="chart-wrap"><canvas id="yearChart" aria-label="Achievements by year"></canvas></div>
+                </div>
+            </div>
+            <div class="col-12">
+                <div class="content-card">
+                    <h5>Most active students</h5>
+                    <div id="leaderboard"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- PROFILE -->
+    <section id="profile" class="section">
+        <h4 class="fw-bold mb-3">My Profile</h4>
+        <div class="content-card">
+            <div class="d-flex align-items-center gap-3 mb-4">
+                <div class="user-avatar" id="profileAvatar">F</div>
+                <div>
+                    <h4 id="profileDisplayName" class="mb-1">Faculty Name</h4>
+                    <p id="profileHeaderEmail" class="text-muted mb-0">Email</p>
+                </div>
+            </div>
+            <div class="row g-3">
+                <div class="col-md-6"><div class="profile-edit-card mt-0"><label class="form-label">Full Name</label><p id="profileName" class="mb-0">Not available</p></div></div>
+                <div class="col-md-6"><div class="profile-edit-card mt-0"><label class="form-label">Email</label><p id="profileEmail" class="mb-0">Not available</p></div></div>
+                <div class="col-md-6"><div class="profile-edit-card mt-0"><label class="form-label">Faculty ID</label><p id="profileId" class="mb-0">Not available</p></div></div>
+                <div class="col-md-6"><div class="profile-edit-card mt-0"><label class="form-label">Department</label><p id="profileDepartment" class="mb-0">Not available</p></div></div>
+            </div>
+            <div class="profile-edit-card">
+                <h5>Edit Profile</h5>
+                <form id="editProfileForm">
+                    <div class="mb-3">
+                        <label for="editName" class="form-label">Full Name</label>
+                        <input type="text" class="form-control" id="editName" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="editEmail" class="form-label">Email</label>
+                        <input type="email" class="form-control" id="editEmail" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="editDepartment" class="form-label">Department</label>
+                        <input type="text" class="form-control" id="editDepartment">
+                    </div>
+                    <button type="submit" id="saveProfileButton" class="btn btn-primary-custom">Save Changes</button>
+                    <p id="profileMessage" class="profile-save-message mt-3 mb-0"></p>
+                </form>
+            </div>
+            <div class="profile-edit-card">
+                <h5>Share your profile</h5>
+                <p class="muted">Anyone who scans this code opens your public profile.</p>
+                <div class="d-flex align-items-center gap-3 flex-wrap">
+                    <div class="qr-box"><div id="profileQr"></div></div>
+                    <button class="btn btn-outline-secondary btn-sm" onclick="copyProfileLink()">
+                        <i class="bi bi-link-45deg"></i> Copy link
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>
+
+<!-- Certificate preview -->
+<div id="previewModal" class="preview-overlay" hidden onclick="if (event.target === this) closePreview()">
+    <div class="preview-box" role="dialog" aria-modal="true" aria-label="Certificate preview">
+        <div class="preview-head">
+            <strong>Certificate</strong>
+            <div class="d-flex gap-2">
+                <a id="previewOpen" class="btn btn-sm btn-outline-primary" target="_blank" rel="noopener">Open in new tab</a>
+                <button class="btn btn-sm btn-outline-secondary" onclick="closePreview()">Close</button>
+            </div>
+        </div>
+        <div id="previewBody" class="preview-body"></div>
+    </div>
+</div>
+<div id="toastStack" class="toast-stack" aria-live="polite"></div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+<script>
+    /* ---------- Session ---------- */
+    const token = localStorage.getItem("token");
+    const userId = localStorage.getItem("userId");
+    const role = (localStorage.getItem("role") || "").toUpperCase();
+    const storedName = localStorage.getItem("name");
+    const headers = { "Authorization": "Bearer " + token };
+    const authorized = Boolean(token && userId && role === "FACULTY");
+
+    function logout() {
+        ["token", "userId", "name", "email", "role"].forEach(k => localStorage.removeItem(k));
+        window.location.href = "login.html";
+    }
+    if (!authorized) logout();
+
+    /* ---------- State & constants ---------- */
+    const state = { students: [], studentAch: [], facultyAch: [], charts: {} };
+    const PALETTE = ["#4f46e5", "#0ea5e9", "#10b981", "#f59e0b", "#ef4444", "#8b5cf6", "#14b8a6"];
+    const MAX_FILE_MB = 5; // keep in sync with spring.servlet.multipart.max-file-size
+
+    /* ---------- Helpers ---------- */
+    function escapeHTML(value) {
+        return String(value ?? "").replace(/[&<>"']/g, c => ({
+            "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;"
+        })[c]);
+    }
+
+    async function api(path, options = {}) {
+        const res = await fetch(path, { ...options, headers: { ...headers, ...(options.headers || {}) } });
+        if (res.status === 401) { logout(); throw new Error("Session expired. Please sign in again."); }
+        const data = await res.json().catch(() => null);
+        if (!res.ok) throw new Error((data && (data.message || data.error)) || "Request failed (HTTP " + res.status + ")");
+        return data;
+    }
+
+    function toast(message, type = "success") {
+        const el = document.createElement("div");
+        el.className = "toast-item toast-" + type;
+        el.textContent = message;
+        document.getElementById("toastStack").appendChild(el);
+        setTimeout(() => el.remove(), 4000);
+    }
+
+    function setStat(id, value) {
+        const el = document.getElementById(id);
+        if (!el) return;
+        const target = Number(value) || 0, start = Number(el.textContent) || 0;
+        if (start === target || matchMedia("(prefers-reduced-motion: reduce)").matches) { el.textContent = target; return; }
+        const t0 = performance.now();
+        (function tick(now) {
+            const p = Math.min((now - t0) / 600, 1);
+            el.textContent = Math.round(start + (target - start) * p);
+            if (p < 1) requestAnimationFrame(tick);
+        })(t0);
+    }
+
+    const countBy = (list, fn) => {
+        const map = new Map();
+        list.forEach(x => { const k = fn(x); if (k) map.set(k, (map.get(k) || 0) + 1); });
+        return map;
+    };
+
+    const skeletonRows = (cols, n = 4) =>
+        Array.from({ length: n }, () => "<tr>" + '<td><span class="skeleton"></span></td>'.repeat(cols) + "</tr>").join("");
+    const stateRow = (cols, text, isError) =>
+        `<tr class="state-row${isError ? " is-error" : ""}"><td colspan="${cols}">${escapeHTML(text)}</td></tr>`;
+
+    /* ---------- Tables: search, filter, render ---------- */
+    const achievementRow = fallback => item => `
+        <tr>
+            <td>${escapeHTML(item.userName || fallback)}</td>
+            <td>${escapeHTML(item.title)}</td>
+            <td>${escapeHTML(item.category)}</td>
+            <td>${escapeHTML(item.achievementDate || "N/A")}</td>
+            <td>${item.hasCertificate
+                ? `<button class="btn btn-sm btn-outline-primary" onclick="viewFacultyCertificate(${Number(item.id)})"><i class="bi bi-eye"></i> View</button>`
+                : '<span class="text-muted">Not uploaded</span>'}</td>
+        </tr>`;
+
+    const views = {
+        students: {
+            body: "studentTable", cols: 3, noun: "students", data: () => state.students,
+            text: s => [s.id, s.name, s.department].join(" "),
+            row: s => `<tr><td>${escapeHTML(s.id)}</td><td>${escapeHTML(s.name)}</td><td>${escapeHTML(s.department || "Not specified")}</td></tr>`
+        },
+        studentAch: {
+            body: "studentAchievementTable", cols: 5, noun: "student achievements", category: true,
+            data: () => state.studentAch, text: a => [a.userName, a.title, a.category].join(" "), row: achievementRow("Student")
+        },
+        facultyAch: {
+            body: "facultyAchievementTable", cols: 5, noun: "faculty achievements", category: true,
+            data: () => state.facultyAch, text: a => [a.userName, a.title, a.category].join(" "), row: achievementRow("Faculty")
+        }
+    };
+
+    function mountToolbar(key) {
+        const v = views[key];
+        const anchor = document.getElementById(v.body).closest("table");
+        const bar = document.createElement("div");
+        bar.className = "table-toolbar";
+        bar.innerHTML = `<input type="search" class="form-control form-control-sm" placeholder="Search ${v.noun}…" aria-label="Search ${v.noun}">`
+            + (v.category ? '<select class="form-select form-select-sm" aria-label="Filter by category"></select>' : "");
+        (anchor.closest(".table-responsive") || anchor).before(bar);
+        v.query = ""; v.cat = ""; v.select = bar.querySelector("select");
+        bar.querySelector("input").addEventListener("input", e => { v.query = e.target.value.trim().toLowerCase(); renderTable(key); });
+        if (v.select) v.select.addEventListener("change", e => { v.cat = e.target.value; renderTable(key); });
+    }
+
+    function renderTable(key) {
+        const v = views[key], all = v.data();
+        if (v.select) {
+            const cats = [...new Set(all.map(a => a.category).filter(Boolean))].sort();
+            v.select.innerHTML = '<option value="">All categories</option>'
+                + cats.map(c => `<option value="${escapeHTML(c)}"${c === v.cat ? " selected" : ""}>${escapeHTML(c)}</option>`).join("");
+        }
+        const rows = all.filter(x => (!v.cat || x.category === v.cat) && (!v.query || v.text(x).toLowerCase().includes(v.query)));
+        document.getElementById(v.body).innerHTML = rows.length
+            ? rows.map(v.row).join("")
+            : stateRow(v.cols, all.length ? "No matches. Try a different search or category." : "No " + v.noun + " yet.");
+    }
+
+    async function loadList(key, url, stateKey) {
+        const v = views[key], body = document.getElementById(v.body);
+        body.innerHTML = skeletonRows(v.cols);
+        try {
+            const data = await api(url);
+            state[stateKey] = Array.isArray(data) ? data : [];
+            renderTable(key);
+        } catch (error) {
+            body.innerHTML = stateRow(v.cols, error.message, true);
+        }
+        refreshStats();
+    }
+    const loadStudents = () => loadList("students", "/api/faculty/students", "students");
+    const loadStudentAchievements = () => loadList("studentAch", "/api/faculty/student-achievements", "studentAch");
+    const loadFacultyAchievements = () => loadList("facultyAch", "/api/faculty/faculty-achievements", "facultyAch");
+
+    /* ---------- Stats & reports ---------- */
+    function refreshStats() {
+        const { students, studentAch, facultyAch } = state;
+        setStat("totalStudents", students.length);
+        setStat("totalDepartments", new Set(students.map(s => s.department).filter(Boolean)).size);
+        setStat("totalAchievements", studentAch.length + facultyAch.length);
+        setStat("reportStudentCount", studentAch.length);
+        setStat("reportFacultyCount", facultyAch.length);
+        renderReports();
+    }
+
+    function upsertChart(id, config) {
+        const canvas = document.getElementById(id);
+        if (!canvas || typeof Chart === "undefined") return;
+        const existing = state.charts[id];
+        if (existing) { existing.data = config.data; existing.update(); return; }
+        state.charts[id] = new Chart(canvas, config);
+    }
+
+    function renderReports() {
+        const all = [...state.studentAch, ...state.facultyAch];
+        const cats = countBy(all, a => a.category);
+        upsertChart("categoryChart", {
+            type: "doughnut",
+            data: { labels: [...cats.keys()], datasets: [{ data: [...cats.values()], backgroundColor: PALETTE, borderWidth: 0 }] },
+            options: { maintainAspectRatio: false, cutout: "62%", plugins: { legend: { position: "bottom" } } }
+        });
+        const years = countBy(all, a => (a.achievementDate || "").slice(0, 4));
+        const labels = [...years.keys()].sort();
+        upsertChart("yearChart", {
+            type: "bar",
+            data: { labels, datasets: [{ label: "Achievements", data: labels.map(y => years.get(y)), backgroundColor: PALETTE[0], borderRadius: 6 }] },
+            options: { maintainAspectRatio: false, plugins: { legend: { display: false } }, scales: { y: { beginAtZero: true, ticks: { precision: 0 } } } }
+        });
+
+        const top = [...countBy(state.studentAch, a => a.userName).entries()].sort((a, b) => b[1] - a[1]).slice(0, 5);
+        const max = top.length ? top[0][1] : 1;
+        document.getElementById("leaderboard").innerHTML = top.length
+            ? top.map(([name, n]) => `<div class="rank-row"><span>${escapeHTML(name)}</span><div class="rank-bar"><i style="width:${(n / max) * 100}%"></i></div><b>${n}</b></div>`).join("")
+            : '<p class="muted mb-0">Student achievements will appear here once they are uploaded.</p>';
+
+        const pct = all.length ? Math.round(all.filter(a => a.hasCertificate).length / all.length * 100) : 0;
+        document.getElementById("coverageBar").style.width = pct + "%";
+        document.getElementById("coverageText").textContent = pct + "%";
+    }
+
+    function exportCSV() {
+        const safe = v => { const s = String(v ?? ""); return '"' + (/^[=+\-@]/.test(s) ? "'" + s : s).replace(/"/g, '""') + '"'; };
+        const line = (type, a) => [type, a.userName, a.title, a.category, a.achievementDate, a.hasCertificate ? "Yes" : "No"].map(safe).join(",");
+        const rows = [["Type", "Name", "Title", "Category", "Date", "Certificate"].map(safe).join(","),
+            ...state.studentAch.map(a => line("Student", a)), ...state.facultyAch.map(a => line("Faculty", a))];
+        const url = URL.createObjectURL(new Blob(["\ufeff" + rows.join("\n")], { type: "text/csv" }));
+        const link = Object.assign(document.createElement("a"), { href: url, download: "achievements.csv" });
+        link.click();
+        URL.revokeObjectURL(url);
+        toast("Exported " + (rows.length - 1) + " achievements.");
+    }
+
+    /* ---------- Certificate preview ---------- */
+    let previewUrl = null;
+    async function viewFacultyCertificate(achievementId) {
+        const modal = document.getElementById("previewModal"), body = document.getElementById("previewBody");
+        body.innerHTML = '<span class="skeleton skeleton-block"></span>';
+        modal.hidden = false;
+        try {
+            const res = await fetch("/api/public/certificates/" + encodeURIComponent(achievementId));
+            if (!res.ok) throw new Error("This certificate could not be loaded.");
+            const blob = await res.blob();
+            if (previewUrl) URL.revokeObjectURL(previewUrl);
+            previewUrl = URL.createObjectURL(blob);
+            body.innerHTML = blob.type.startsWith("image/")
+                ? `<img src="${previewUrl}" alt="Certificate">`
+                : `<iframe src="${previewUrl}" title="Certificate"></iframe>`;
+            document.getElementById("previewOpen").href = previewUrl;
+        } catch (error) {
+            body.innerHTML = `<p class="text-danger mb-0">${escapeHTML(error.message)}</p>`;
+        }
+    }
+    function closePreview() {
+        document.getElementById("previewModal").hidden = true;
+        document.getElementById("previewBody").innerHTML = "";
+        if (previewUrl) { URL.revokeObjectURL(previewUrl); previewUrl = null; }
+    }
+    document.addEventListener("keydown", e => { if (e.key === "Escape") closePreview(); });
+
+    /* ---------- Navigation ---------- */
+    function showSection(sectionId, element) {
+        document.querySelectorAll(".section").forEach(s => s.classList.remove("active"));
+        const selected = document.getElementById(sectionId);
+        if (selected) selected.classList.add("active");
+        document.querySelectorAll(".nav-item-custom").forEach(i => i.classList.remove("active"));
+        if (element) element.classList.add("active");
+        if (sectionId === "profile") loadFacultyProfile();
+        if (sectionId === "students") loadStudents();
+        if (sectionId === "studentAchievements") loadStudentAchievements();
+        if (sectionId === "facultyAchievements") loadFacultyAchievements();
+        if (sectionId === "reports") renderReports();
+    }
+
+    /* ---------- Profile & sharing ---------- */
+    // Create public-profile.html (reads /api/public/...) so this link has somewhere to land.
+    const profileLink = () => location.origin + "/public-profile.html?id=" + encodeURIComponent(userId);
+
+    function renderQr() {
+        const box = document.getElementById("profileQr");
+        if (!box || typeof QRCode === "undefined") return;
+        box.innerHTML = "";
+        new QRCode(box, { text: profileLink(), width: 140, height: 140 });
+    }
+    async function copyProfileLink() {
+        try { await navigator.clipboard.writeText(profileLink()); toast("Profile link copied."); }
+        catch { toast("Could not copy. Copy it from the address bar instead.", "error"); }
+    }
+
+    async function loadFacultyProfile() {
+        const message = document.getElementById("profileMessage");
+        try {
+            const profile = await api("/api/users/" + encodeURIComponent(userId) + "/profile");
+            const name = profile.name || storedName || "Faculty";
+            const email = profile.email || localStorage.getItem("email") || "";
+            const department = profile.department || "";
+            const set = (id, v) => { document.getElementById(id).textContent = v; };
+            set("profileDisplayName", name);
+            set("profileHeaderEmail", email);
+            set("profileAvatar", name.charAt(0).toUpperCase());
+            set("profileName", name);
+            set("profileEmail", email || "Not available");
+            set("profileId", profile.id || userId);
+            set("profileDepartment", department || "Not specified");
+            document.getElementById("editName").value = name;
+            document.getElementById("editEmail").value = email;
+            document.getElementById("editDepartment").value = department;
+            renderQr();
+        } catch (error) {
+            message.className = "profile-save-message mt-3 text-danger";
+            message.textContent = error.message;
+        }
+    }
+
+    document.getElementById("editProfileForm").addEventListener("submit", async event => {
+        event.preventDefault();
+        const button = document.getElementById("saveProfileButton");
+        const message = document.getElementById("profileMessage");
+        const profileData = {
+            name: document.getElementById("editName").value.trim(),
+            email: document.getElementById("editEmail").value.trim(),
+            department: document.getElementById("editDepartment").value.trim()
+        };
+        if (!profileData.name || !profileData.email) {
+            message.className = "profile-save-message mt-3 text-danger";
+            message.textContent = "Name and email are required.";
+            return;
+        }
+        button.disabled = true;
+        try {
+            await api("/api/users/" + encodeURIComponent(userId) + "/profile", {
+                method: "PUT",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(profileData)
+            });
+            localStorage.setItem("name", profileData.name);
+            localStorage.setItem("email", profileData.email);
+            document.getElementById("welcomeName").textContent = "Welcome, " + profileData.name + "!";
+            document.getElementById("avatar").textContent = profileData.name.charAt(0).toUpperCase();
+            message.textContent = "";
+            toast("Profile updated.");
+            await loadFacultyProfile();
+        } catch (error) {
+            message.className = "profile-save-message mt-3 text-danger";
+            message.textContent = error.message;
+        } finally {
+            button.disabled = false;
+        }
+    });
+
+    /* ---------- Upload faculty achievement ---------- */
+    document.getElementById("facultyAchievementForm").addEventListener("submit", async event => {
+        event.preventDefault();
+        const message = document.getElementById("facultyUploadMessage");
+        const button = document.getElementById("facultyUploadButton");
+        const file = document.getElementById("facultyFile").files[0];
+        const fail = text => { message.className = "mt-3 text-danger"; message.textContent = text; };
+
+        if (!file) return fail("Choose a document to upload.");
+        const extension = (file.name.split(".").pop() || "").toLowerCase();
+        if (!["pdf", "jpg", "jpeg", "png"].includes(extension)) return fail("Only PDF, JPG, JPEG and PNG files are allowed.");
+        if (file.size > MAX_FILE_MB * 1024 * 1024) return fail("File is larger than " + MAX_FILE_MB + " MB. Compress it and try again.");
+
+        button.disabled = true;
+        message.className = "mt-3 text-muted";
+        message.textContent = "Saving achievement…";
+        let createdId = null;
+        try {
+            const created = await api("/api/achievements/user/" + encodeURIComponent(userId), {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    title: document.getElementById("facultyTitle").value.trim(),
+                    category: document.getElementById("facultyCategory").value,
+                    description: document.getElementById("facultyDescription").value.trim(),
+                    achievementDate: document.getElementById("facultyDate").value
+                })
+            });
+            if (!created || !created.id) throw new Error("Achievement was created but the server did not return its ID.");
+            createdId = created.id;
+
+            message.textContent = "Uploading document…";
+            const formData = new FormData();
+            formData.append("file", file);
+            await api("/api/achievements/" + encodeURIComponent(createdId) + "/certificate", { method: "POST", body: formData });
+
+            message.textContent = "";
+            toast("Achievement and document uploaded.");
+            document.getElementById("facultyAchievementForm").reset();
+            await loadFacultyAchievements();
+        } catch (error) {
+            fail(createdId
+                ? "Achievement saved (ID " + createdId + "), but the document did not upload: " + error.message
+                : error.message);
+        } finally {
+            button.disabled = false;
+        }
+    });
+
+    /* ---------- Clustering ---------- */
+    async function loadClusters() {
+        const count = document.getElementById("clusterCount").value;
+        const results = document.getElementById("clusterResults");
+        const button = document.getElementById("clusterButton");
+        button.disabled = true;
+        results.innerHTML = Array.from({ length: Number(count) }, () =>
+            '<div class="col-md-6 col-lg-4"><div class="cluster-card"><span class="skeleton skeleton-block"></span></div></div>').join("");
+        try {
+            const data = await api("/api/ml/cluster?nClusters=" + encodeURIComponent(count), { method: "POST" });
+            const groups = {};
+            (data.students || []).forEach(s => { (groups[s.cluster] = groups[s.cluster] || []).push(s); });
+            const ordered = Object.values(groups).sort((a, b) => b.length - a.length);
+
+            results.innerHTML = ordered.map((students, i) => {
+                const keywords = students[0].cluster_keywords || [];
+                const names = students.map(s => `
+                    <li><span class="mini-avatar">${escapeHTML((s.name || "?").charAt(0).toUpperCase())}</span>
+                        ${escapeHTML(s.name)} <span class="text-muted ms-1">${escapeHTML(s.department || "N/A")}</span></li>`).join("");
+                return `
+                    <div class="col-md-6 col-lg-4">
+                        <div class="cluster-card has-accent" style="--accent:${PALETTE[i % PALETTE.length]}">
+                            <h5>Group ${i + 1}</h5>
+                            <p class="muted">${students.length} student${students.length === 1 ? "" : "s"}</p>
+                            <div>${keywords.map(k => `<span class="kw-chip">${escapeHTML(k)}</span>`).join("") || '<span class="muted">No common keywords</span>'}</div>
+                            <hr>
+                            <ul class="cluster-list">${names}</ul>
+                        </div>
+                    </div>`;
+            }).join("") || '<p class="muted">No students to cluster yet.</p>';
+
+            setStat("totalClusters", ordered.length);
+            toast("Created " + ordered.length + " groups.");
+        } catch (error) {
+            results.innerHTML = `<p class="text-danger">${escapeHTML(error.message)}</p>`;
+        } finally {
+            button.disabled = false;
+        }
+    }
+
+    /* ---------- Boot ---------- */
+    document.addEventListener("DOMContentLoaded", () => {
+        if (!authorized) return;
+        document.getElementById("welcomeName").textContent = "Welcome, " + (storedName || "Faculty") + "!";
+        document.getElementById("avatar").textContent = (storedName || "F").charAt(0).toUpperCase();
+        Object.keys(views).forEach(mountToolbar);
+        loadStudents();
+        loadStudentAchievements();
+        loadFacultyAchievements();
+        loadFacultyProfile();
+    });
+</script>
+</body>
+</html>

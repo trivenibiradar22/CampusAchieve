@@ -1,0 +1,301 @@
+title,description,category
+Java Fundamentals,"Completed training in Java syntax, loops, arrays and object oriented programming",Programming
+Python Basics,Learned Python variables functions lists dictionaries and file handling,Programming
+C Programming Course,Completed introductory course in C programming and problem solving,Programming
+C++ Programming,Practiced classes inheritance polymorphism and STL in C++,Programming
+Data Structures in Java,Studied arrays linked lists stacks queues trees and graphs using Java,Programming
+Competitive Coding,Solved programming problems using algorithms and coding techniques,Programming
+Advanced Java,Learned collections exception handling multithreading and streams,Programming
+Problem Solving with Python,Solved logical and computational problems using Python programs,Programming
+Object Oriented Programming,Completed practical course on encapsulation abstraction inheritance and polymorphism,Programming
+Java Coding Challenge,Participated in a coding challenge focused on Java programming,Programming
+C Language Lab,Completed practical assignments on pointers structures and functions in C,Programming
+Programming Logic,Completed a course on algorithms flowcharts and programming fundamentals,Programming
+Python Automation,Created automation scripts using Python modules and functions,Programming
+Java Developer Training,Completed hands on training in core Java and application development,Programming
+Algorithm Practice,Practiced sorting searching recursion and algorithmic problem solving,Programming
+Programming Contest,Participated in a coding contest and solved programming questions,Programming
+OOP Workshop,Practiced object oriented programming concepts through coding exercises,Programming
+Kotlin Basics,Learned Kotlin syntax variables functions and object oriented concepts,Programming
+C Sharp Training,Completed introductory training in C sharp programming,Programming
+Coding Bootcamp,Completed a programming bootcamp with daily coding exercises,Programming
+HTML and CSS Course,Learned webpage structure styling layouts and responsive design,Web Development
+JavaScript Fundamentals,Completed training in JavaScript functions events arrays and DOM,Web Development
+React Development,Built user interfaces using React components hooks and state,Web Development
+Frontend Development,Created responsive websites using HTML CSS Bootstrap and JavaScript,Web Development
+Full Stack Web Development,Completed practical training in frontend and backend web development,Web Development
+Node.js Workshop,Learned server side JavaScript and Express application development,Web Development
+Bootstrap Training,Created responsive web pages using Bootstrap components and grid system,Web Development
+Portfolio Website Project,Designed and developed a personal portfolio website,Web Development
+Web Design Competition,Designed a responsive website for a college web design competition,Web Development
+Angular Basics,Learned Angular components routing services and forms,Web Development
+CSS Flexbox and Grid,Practiced modern CSS layouts using flexbox and grid,Web Development
+REST API Development,Built web APIs and connected frontend applications to backend services,Web Development
+PHP Web Development,Created dynamic web pages using PHP and MySQL,Web Development
+Django Web Application,Developed a web application using Python Django framework,Web Development
+Website Development Internship,Worked on frontend website pages and responsive layouts,Web Development
+UI Development,Implemented user interface screens using HTML CSS and JavaScript,Web Development
+Web Technologies Course,Studied HTTP browser concepts frontend and backend technologies,Web Development
+E Commerce Website,Developed product listing cart and checkout pages for a website,Web Development
+Next.js Training,Learned Next.js routing rendering and web application structure,Web Development
+Web Development Hackathon,Built a web based solution during a college hackathon,Web Development
+AWS Cloud Practitioner,Completed foundational training in Amazon Web Services cloud concepts,Cloud Computing
+Google Cloud Training,Learned Google Cloud services compute storage and networking,Cloud Computing
+Microsoft Azure Fundamentals,Studied Azure cloud architecture services and resource management,Cloud Computing
+Cloud Computing Course,Learned cloud deployment service models and virtualization,Cloud Computing
+AWS EC2 Lab,Created and configured virtual machine instances using Amazon EC2,Cloud Computing
+Cloud Storage Workshop,Practiced object storage bucket creation and access management,Cloud Computing
+Kubernetes Basics,Learned container orchestration pods deployments and services,Cloud Computing
+Docker Training,Built and managed application containers using Docker,Cloud Computing
+Cloud Security Course,Studied identity access management and cloud security practices,Cloud Computing
+GCP BigQuery Lab,Used BigQuery to create datasets tables and run SQL queries,Cloud Computing
+Azure Internship,Worked with cloud resources and deployment tasks during an internship,Cloud Computing
+Serverless Computing,Built a serverless application using cloud functions,Cloud Computing
+Cloud Architecture Project,Designed a scalable cloud architecture for a web application,Cloud Computing
+DevOps and Cloud,Practiced CI CD pipelines and cloud deployment workflows,Cloud Computing
+AWS Solutions Workshop,Attended a practical workshop on AWS infrastructure services,Cloud Computing
+Cloud Networking,Studied virtual networks subnets routing and cloud firewalls,Cloud Computing
+Google Cloud Skills,Completed hands on labs for Google Cloud platform services,Cloud Computing
+Cloud Migration Project,Planned migration of an application from local servers to cloud,Cloud Computing
+Container Deployment,Deployed a containerized application to a cloud platform,Cloud Computing
+Cloud Computing Seminar,Presented cloud computing concepts and real world applications,Cloud Computing
+Machine Learning Course,Studied supervised unsupervised learning and model evaluation,Artificial Intelligence
+Deep Learning Training,Learned neural networks activation functions and backpropagation,Artificial Intelligence
+Artificial Intelligence Workshop,Attended practical sessions on AI applications and intelligent systems,Artificial Intelligence
+Natural Language Processing,Built text processing models using tokenization and classification,Artificial Intelligence
+Computer Vision Project,Created an image classification application using computer vision,Artificial Intelligence
+Generative AI Training,Learned prompt engineering and generative artificial intelligence concepts,Artificial Intelligence
+AI Chatbot Project,Developed a chatbot using natural language processing techniques,Artificial Intelligence
+TensorFlow Workshop,Practiced building and training neural networks using TensorFlow,Artificial Intelligence
+Scikit Learn Project,Trained classification models using the scikit learn library,Artificial Intelligence
+AI Hackathon,Developed an artificial intelligence solution during a hackathon,Artificial Intelligence
+Reinforcement Learning,Studied agents rewards policies and reinforcement learning methods,Artificial Intelligence
+Neural Network Lab,Implemented a basic neural network for prediction tasks,Artificial Intelligence
+AI Internship,Worked on machine learning experiments and model evaluation,Artificial Intelligence
+Image Recognition,Trained a model to recognize objects in images,Artificial Intelligence
+Sentiment Analysis,Built a sentiment classification model for text reviews,Artificial Intelligence
+AI Research Seminar,Presented recent applications and challenges in artificial intelligence,Artificial Intelligence
+Predictive AI System,Created a prediction system using a trained machine learning model,Artificial Intelligence
+Prompt Engineering Course,Practiced writing prompts and evaluating generative AI outputs,Artificial Intelligence
+Intelligent Recommendation System,Built a recommendation prototype using machine learning,Artificial Intelligence
+AI Fundamentals,Completed an introductory course on artificial intelligence,Artificial Intelligence
+Data Analytics Course,Learned data cleaning analysis visualization and interpretation,Data Science
+Pandas and NumPy Training,Used Python libraries to manipulate and analyze datasets,Data Science
+Data Visualization Workshop,Created charts and dashboards to communicate data insights,Data Science
+Power BI Training,Built interactive reports and dashboards using Power BI,Data Science
+Exploratory Data Analysis,Performed exploratory analysis and identified patterns in a dataset,Data Science
+Statistics for Data Science,Studied probability descriptive statistics and hypothesis testing,Data Science
+Data Science Internship,Cleaned datasets and prepared reports during a data science internship,Data Science
+Predictive Analytics Project,Analyzed historical data to build a predictive model,Data Science
+Tableau Workshop,Created interactive visualizations using Tableau,Data Science
+Python Data Analysis,Analyzed structured data using Python and pandas,Data Science
+Data Mining Course,Studied data mining preprocessing and pattern discovery,Data Science
+Business Analytics,Used data analysis to support business decisions,Data Science
+Data Science Hackathon,Analyzed a dataset and presented insights in a hackathon,Data Science
+Excel Analytics,Used spreadsheets pivot tables and charts for data analysis,Data Science
+Data Cleaning Project,Handled missing values duplicates and inconsistent records,Data Science
+Statistical Analysis,Applied statistical methods to interpret experimental data,Data Science
+Dashboard Development,Designed a dashboard to summarize key performance indicators,Data Science
+Big Data Introduction,Studied distributed data processing and big data concepts,Data Science
+Research Data Analysis,Analyzed research data and summarized findings,Data Science
+Data Storytelling,Presented data insights through visualizations and clear explanations,Data Science
+SQL Fundamentals,Learned SQL queries joins grouping and subqueries,Database
+MySQL Workshop,Created tables and practiced database operations using MySQL,Database
+Database Management Course,Studied relational database design normalization and transactions,Database
+MongoDB Training,Learned document databases collections and CRUD operations,Database
+JDBC Programming,Connected Java applications to relational databases using JDBC,Database
+Oracle SQL Course,Practiced SQL statements and database objects in Oracle,Database
+Database Design Project,Designed an ER diagram and relational schema for an application,Database
+PostgreSQL Basics,Created databases tables indexes and queries using PostgreSQL,Database
+SQL Query Challenge,Solved database query problems using joins and aggregate functions,Database
+Database Internship,Worked on SQL queries and database maintenance tasks,Database
+PL SQL Training,Learned procedures functions cursors and triggers,Database
+Database Normalization,Applied normalization techniques to reduce data redundancy,Database
+Library Database Project,Designed a database for managing books members and issue records,Database
+Spring Data JPA,Used repositories and entity mapping to access a relational database,Database
+Database Security,Studied database users roles permissions and backup practices,Database
+SQL Bootcamp,Completed practical exercises on data retrieval and modification,Database
+Data Modeling Workshop,Created conceptual logical and physical data models,Database
+Redis Basics,Learned key value storage and caching using Redis,Database
+Database Administration,Practiced backup restore and database configuration,Database
+Cloud Database Lab,Created and queried a managed cloud database,Database
+Cyber Security Course,Studied common cyber threats vulnerabilities and security controls,Cyber Security
+Ethical Hacking Workshop,Learned ethical hacking concepts and authorized security testing,Cyber Security
+Network Security Training,Studied firewalls encryption and secure network protocols,Cyber Security
+Penetration Testing Lab,Practiced basic penetration testing in a controlled lab environment,Cyber Security
+Cyber Security Hackathon,Developed a security awareness solution during a hackathon,Cyber Security
+Digital Forensics Course,Learned evidence collection and digital forensic investigation basics,Cyber Security
+Secure Coding Workshop,Studied input validation authentication and secure coding practices,Cyber Security
+Cryptography Fundamentals,Learned encryption hashing and public key cryptography,Cyber Security
+Web Application Security,Studied common web vulnerabilities and defensive techniques,Cyber Security
+Security Operations Training,Learned security monitoring logs and incident response,Cyber Security
+Cyber Security Internship,Assisted with vulnerability assessment and security documentation,Cyber Security
+Capture The Flag Event,Solved cybersecurity challenges in a capture the flag event,Cyber Security
+Linux Security Lab,Practiced user permissions services and system hardening,Cyber Security
+Information Security Seminar,Presented information security risks and protection methods,Cyber Security
+Cloud Security Workshop,Learned cloud identity access and security configuration,Cyber Security
+Malware Analysis Basics,Studied safe malware analysis concepts in an isolated environment,Cyber Security
+Network Monitoring Project,Built a prototype to monitor network traffic and alerts,Cyber Security
+Security Audit Project,Reviewed application security settings and documented findings,Cyber Security
+Incident Response Exercise,Practiced identifying and documenting a simulated security incident,Cyber Security
+Cyber Awareness Program,Participated in a cyber safety and awareness program,Cyber Security
+Technical Workshop,Attended a hands on technical workshop organized by the college,Workshop
+Robotics Workshop,Built and tested a basic robot during a practical workshop,Workshop
+IoT Workshop,Learned sensors microcontrollers and internet of things applications,Workshop
+PCB Design Workshop,Practiced schematic capture and printed circuit board design,Workshop
+Embedded Systems Workshop,Worked with microcontrollers and embedded programming exercises,Workshop
+Entrepreneurship Workshop,Attended sessions on startup planning and business models,Workshop
+Communication Skills Workshop,Practiced presentation teamwork and communication skills,Workshop
+Cloud Computing Workshop,Completed practical cloud platform exercises in a workshop,Workshop
+AI Tools Workshop,Explored artificial intelligence tools through guided activities,Workshop
+Resume Building Workshop,Learned how to prepare resumes and professional profiles,Workshop
+Career Guidance Workshop,Attended career planning and interview preparation sessions,Workshop
+Design Thinking Workshop,Used design thinking methods to identify and solve problems,Workshop
+Python Workshop,Practiced Python programming in an instructor led workshop,Workshop
+Git and GitHub Workshop,Learned version control branching and collaboration,Workshop
+Electronics Workshop,Performed practical electronics experiments and measurements,Workshop
+Leadership Workshop,Practiced team leadership and decision making activities,Workshop
+Research Methodology Workshop,Learned research planning literature review and citation methods,Workshop
+Industry 4.0 Workshop,Explored automation robotics and connected manufacturing,Workshop
+Innovation Workshop,Participated in ideation and prototype development activities,Workshop
+Faculty Development Workshop,Attended a professional development workshop,Workshop
+Software Developer Internship,Worked on software development tasks with an engineering team,Internship
+Java Developer Intern,Developed Java modules and fixed application bugs,Internship
+Python Developer Internship,Created Python scripts and tested application features,Internship
+Web Developer Internship,Implemented website pages and frontend components,Internship
+Data Analyst Internship,Prepared datasets and created analysis reports,Internship
+Machine Learning Internship,Trained and evaluated machine learning models,Internship
+Cloud Engineer Internship,Assisted with cloud deployment and infrastructure tasks,Internship
+Cyber Security Internship,Supported security testing and vulnerability documentation,Internship
+Embedded Systems Internship,Worked with microcontrollers sensors and embedded C,Internship
+IoT Internship,Built and tested connected device prototypes,Internship
+Research Internship,Assisted with literature review experiments and research reports,Internship
+QA Testing Internship,Executed test cases and documented software defects,Internship
+Backend Developer Internship,Developed REST APIs and database integration features,Internship
+Mobile App Internship,Worked on Android application screens and functionality,Internship
+DevOps Internship,Practiced build automation deployment and CI CD workflows,Internship
+Electronics Internship,Assisted with circuit testing and electronic hardware tasks,Internship
+Business Analyst Internship,Prepared requirements documents and process analysis,Internship
+UI UX Internship,Created wireframes prototypes and interface designs,Internship
+Full Stack Internship,Worked on frontend backend and database components,Internship
+Summer Training Internship,Completed supervised industry training and practical assignments,Internship
+College Hackathon,Built a working prototype with a team during a college hackathon,Hackathon
+Smart India Hackathon,Presented a technology solution for a problem statement in SIH,Hackathon
+AI Hackathon,Developed an AI based prototype during a timed coding event,Hackathon
+Web Development Hackathon,Created a responsive web application during a hackathon,Hackathon
+IoT Hackathon,Built an internet of things prototype using sensors and a microcontroller,Hackathon
+Cyber Security Hackathon,Created a cybersecurity solution during a student hackathon,Hackathon
+Innovation Challenge,Collaborated with teammates to develop and pitch an innovative solution,Hackathon
+Healthcare Hackathon,Developed a digital solution for a healthcare problem statement,Hackathon
+FinTech Hackathon,Built a prototype addressing a financial technology challenge,Hackathon
+Sustainability Hackathon,Designed a technology solution for an environmental challenge,Hackathon
+Coding Marathon,Participated in a team based programming marathon,Hackathon
+Prototype Challenge,Designed and demonstrated a working technical prototype,Hackathon
+National Level Hackathon,Represented the college in a national level hackathon,Hackathon
+Campus Innovation Event,Collaborated on a campus innovation project under time constraints,Hackathon
+Software Hackathon,Developed and demonstrated a software application with a team,Hackathon
+Hardware Hackathon,Designed and tested a hardware prototype during a competition,Hackathon
+Startup Hackathon,Prepared a startup concept and minimum viable product,Hackathon
+Women in Tech Hackathon,Participated in a collaborative technology innovation event,Hackathon
+Open Innovation Hackathon,Solved an open ended problem through rapid prototyping,Hackathon
+Hackathon Finalist,Qualified as a finalist in a student technology hackathon,Hackathon
+Academic Excellence Award,Received an award for outstanding academic performance,Academic
+Semester Topper,Secured the highest marks in the semester examination,Academic
+Merit Scholarship,Received a merit scholarship based on academic results,Academic
+First Rank Award,Achieved first rank in the department,Academic
+University Examination Distinction,Earned distinction in university examinations,Academic
+Academic Achievement,Recognized for consistent performance in coursework,Academic
+Subject Topper,Scored the highest marks in a subject,Academic
+Dean List Recognition,Received recognition for strong academic performance,Academic
+Best Student Award,Received an award for overall student performance,Academic
+Mathematics Olympiad,Participated in an academic mathematics competition,Academic
+Science Quiz Competition,Secured a position in an academic science quiz,Academic
+Technical Quiz,Participated in a subject knowledge quiz competition,Academic
+Academic Project Award,Received recognition for an academic course project,Academic
+Excellent Attendance Award,Received recognition for consistent class attendance,Academic
+National Scholarship,Awarded a scholarship for academic merit,Academic
+Research Presentation Award,Received an award for an academic research presentation,Academic
+Course Completion,Successfully completed an academic certification course,Academic
+Department Merit Certificate,Received a department level academic merit certificate,Academic
+University Rank,Achieved a university rank in the examination,Academic
+Academic Leadership,Recognized for academic contribution and peer learning,Academic
+Cricket Tournament,Participated in an intercollegiate cricket tournament,Sports
+Football Competition,Played in a college football competition,Sports
+Badminton Championship,Won a position in a badminton championship,Sports
+Athletics Meet,Participated in track and field athletic events,Sports
+Basketball Tournament,Represented the college in a basketball tournament,Sports
+Volleyball Competition,Participated in an interdepartmental volleyball competition,Sports
+Chess Tournament,Competed in a college level chess tournament,Sports
+Table Tennis Event,Participated in a table tennis competition,Sports
+Sports Achievement Award,Received recognition for sporting performance,Sports
+Marathon Participation,Completed a long distance running event,Sports
+Kabaddi Tournament,Represented the department in a kabaddi tournament,Sports
+Swimming Competition,Participated in a swimming competition,Sports
+Yoga Competition,Participated in an intercollegiate yoga event,Sports
+Athletics Medal,Won a medal in a track and field event,Sports
+College Sports Captain,Served as captain of a college sports team,Sports
+District Level Sports,Represented the school or college at district level sports,Sports
+Intercollege Tournament,Represented the college in an intercollegiate sports event,Sports
+Fitness Challenge,Completed a campus fitness challenge,Sports
+Sports Volunteer,Volunteered in organizing a college sports event,Sports
+Badminton Participation,Represented the college in a badminton event,Sports
+Research Paper Publication,Published a research paper in an academic journal,Research
+IEEE Conference Paper,Presented a research paper at an IEEE conference,Research
+Research Poster,Presented a research poster at a technical symposium,Research
+Literature Review,Completed a literature review on an engineering research topic,Research
+Research Project,Conducted an academic research project and documented findings,Research
+Conference Presentation,Presented research findings at an academic conference,Research
+Patent Application,Contributed to a patent application for an engineering innovation,Research
+Research Symposium,Participated in a research symposium and presented technical work,Research
+Journal Publication,Co authored a paper published in a peer reviewed journal,Research
+Undergraduate Research,Completed an undergraduate research study under faculty guidance,Research
+Research Internship,Assisted with experiments and technical research documentation,Research
+Technical Paper Presentation,Presented a technical paper at a student conference,Research
+Survey Paper,Prepared a survey paper reviewing existing research methods,Research
+Research Methodology,Completed training in research methods and academic writing,Research
+Conference Proceedings,Published research work in conference proceedings,Research
+Research Excellence Award,Received recognition for an academic research contribution,Research
+Experimental Study,Designed experiments and analyzed results for a research study,Research
+Citation Analysis,Studied research citations and publication impact,Research
+Interdisciplinary Research,Collaborated on a research topic across multiple disciplines,Research
+Research Seminar,Presented a seminar on current research developments,Research
+Smart Parking System,Developed a parking slot detection prototype using sensors,Project
+Train Reservation System,Built a train booking application with database integration,Project
+Student Portfolio Platform,Created a digital platform to display student achievements,Project
+IoT Home Automation,Built a home automation prototype using connected devices,Project
+Weather Prediction Project,Created a model to predict weather using historical data,Project
+Library Management System,Developed software to manage books members and transactions,Project
+Expense Tracker Application,Built an application to record and analyze personal expenses,Project
+Online Learning Platform,Developed a web platform for learning resources and courses,Project
+Smart Helmet Project,Built a safety helmet prototype with sensors and alerts,Project
+Waste Segregation System,Created a prototype to separate waste using sensors,Project
+Face Recognition Attendance,Developed an attendance prototype using face recognition,Project
+Hospital Management System,Created a database driven hospital management application,Project
+E Commerce Project,Built an online shopping application with product and order features,Project
+Mobile Application Project,Developed an Android application for a campus use case,Project
+Embedded Controller Project,Designed a microcontroller based embedded system,Project
+Cloud Deployment Project,Deployed a web application using cloud infrastructure,Project
+Data Analytics Project,Analyzed a dataset and presented findings in a dashboard,Project
+Cybersecurity Scanner,Created a prototype to identify basic security weaknesses,Project
+AI Recommendation Project,Built a prototype that recommends items based on similarity,Project
+Final Year Project,Designed implemented and demonstrated an engineering project,Project
+Leadership Certificate,Received recognition for leadership and team coordination,Other
+Volunteer Certificate,Participated in a community service and volunteering activity,Other
+Event Organizing,Helped organize a college technical and cultural event,Other
+NSS Activity,Participated in a National Service Scheme community activity,Other
+NCC Certificate,Completed an NCC training or participation activity,Other
+Communication Skills,Completed training to improve professional communication,Other
+Personality Development,Attended a personality development program,Other
+Career Readiness Program,Completed a career readiness and employability program,Other
+Professional Ethics,Completed a course on professional ethics and workplace conduct,Other
+Teamwork Recognition,Received recognition for teamwork and collaboration,Other
+Cultural Competition,Participated in a college cultural competition,Other
+Photography Competition,Participated in a photography competition,Other
+Art Competition,Presented creative work in an art competition,Other
+Social Awareness Program,Participated in a social awareness campaign,Other
+Event Participation,Received a certificate for participating in a college event,Other
+Student Ambassador,Served as a student ambassador for an educational program,Other
+Peer Mentoring,Volunteered to mentor and support fellow students,Other
+Public Speaking,Participated in a public speaking activity,Other
+Professional Development,Completed a general professional development program,Other
+Cultural Fest Volunteer,Volunteered in organizing a college cultural festival,Other

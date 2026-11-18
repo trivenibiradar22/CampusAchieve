@@ -1,0 +1,30 @@
+
+# Java and Maven
+target/
+*.class
+
+# Python
+**/venv/
+**/__pycache__/
+*.pyc
+
+# Secrets
+.env
+.env.*
+!.env.example
+
+# Uploaded files and logs
+uploads/
+*.log
+
+# IDE files
+.idea/
+*.iml
+
+# Operating system
+.DS_Store
+Thumbs.db
+# Eclipse / STS
+.classpath
+.project
+.settings/

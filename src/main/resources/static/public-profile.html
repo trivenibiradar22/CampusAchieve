@@ -1,0 +1,383 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Public Faculty Profile | Campus Achieve</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+
+    <style>
+        body {
+            background: #f4f6fb;
+            font-family: Arial, sans-serif;
+            color: #1e293b;
+        }
+
+        .navbar {
+            background: #0f172a;
+            padding: 18px 8%;
+        }
+
+        .navbar-brand {
+            color: white;
+            font-weight: bold;
+            font-size: 22px;
+        }
+
+        .profile-container {
+            max-width: 950px;
+            margin: 40px auto;
+            padding: 20px;
+        }
+
+        .profile-card {
+            background: white;
+            border-radius: 18px;
+            padding: 30px;
+            box-shadow: 0 5px 25px rgba(0, 0, 0, 0.06);
+        }
+
+        .profile-avatar {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            background: #4f46e5;
+            color: white;
+            display: grid;
+            place-items: center;
+            font-size: 38px;
+            font-weight: bold;
+            margin: auto;
+        }
+
+        .profile-name {
+            font-weight: 700;
+            margin-top: 18px;
+        }
+
+        .profile-email {
+            color: #64748b;
+            overflow-wrap: anywhere;
+        }
+
+        .info-card, .achievement-card {
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 12px;
+            padding: 18px;
+            height: 100%;
+        }
+
+        .info-label {
+            color: #64748b;
+            font-size: 13px;
+            margin-bottom: 7px;
+        }
+
+        .info-value {
+            font-weight: 600;
+            overflow-wrap: anywhere;
+            margin-bottom: 0;
+        }
+
+        .section-title {
+            font-weight: 700;
+            margin-bottom: 18px;
+        }
+
+        .loading {
+            text-align: center;
+            padding: 50px;
+        }
+
+        .error {
+            color: #dc2626;
+            text-align: center;
+            padding: 30px;
+        }
+
+        .achievement-card h6 {
+            font-weight: 700;
+            overflow-wrap: anywhere;
+        }
+
+        .achievement-meta {
+            color: #64748b;
+            font-size: 14px;
+        }
+
+        footer {
+            text-align: center;
+            color: #64748b;
+            padding: 25px;
+        }
+
+        @media (max-width: 576px) {
+            .profile-card {
+                padding: 20px;
+            }
+
+            .profile-container {
+                margin: 20px auto;
+                padding: 12px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<nav class="navbar">
+    <span class="navbar-brand">
+        <i class="bi bi-mortarboard-fill"></i>
+        Campus Achieve
+    </span>
+</nav>
+
+<div class="profile-container">
+
+    <div id="loading" class="loading">
+        <div class="spinner-border text-primary" role="status"></div>
+        <p class="mt-3">Loading public profile...</p>
+    </div>
+
+    <div id="profileContent" class="profile-card" hidden>
+
+        <div class="text-center mb-4">
+            <div class="profile-avatar" id="profileAvatar">F</div>
+            <h2 class="profile-name" id="profileName">Faculty Name</h2>
+            <p class="profile-email" id="profileEmail"></p>
+            <span class="badge bg-primary">Faculty Profile</span>
+        </div>
+
+        <hr>
+
+        <h5 class="section-title">Profile Information</h5>
+
+        <div class="row g-3">
+
+            <div class="col-md-6">
+                <div class="info-card">
+                    <p class="info-label">
+                        <i class="bi bi-person"></i> Full Name
+                    </p>
+                    <p class="info-value" id="detailName">-</p>
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="info-card">
+                    <p class="info-label">
+                        <i class="bi bi-envelope"></i> Email
+                    </p>
+                    <p class="info-value" id="detailEmail">-</p>
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="info-card">
+                    <p class="info-label">
+                        <i class="bi bi-person-badge"></i> Faculty ID
+                    </p>
+                    <p class="info-value" id="detailId">-</p>
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="info-card">
+                    <p class="info-label">
+                        <i class="bi bi-building"></i> Department
+                    </p>
+                    <p class="info-value" id="detailDepartment">-</p>
+                </div>
+            </div>
+
+        </div>
+
+        <hr class="my-4">
+
+        <div class="d-flex justify-content-between align-items-center flex-wrap gap-2">
+            <h5 class="section-title mb-0">
+                Faculty Achievements & Certificates
+            </h5>
+
+            <span class="badge bg-light text-dark" id="achievementCount">
+                0 achievements
+            </span>
+        </div>
+
+        <div id="achievementList" class="row g-3 mt-1">
+            <div class="col-12 text-muted">
+                Loading achievements...
+            </div>
+        </div>
+
+        <div class="text-center mt-4">
+            <p class="text-muted mb-0">
+                <i class="bi bi-patch-check-fill text-primary"></i>
+                Shared through Campus Achieve
+            </p>
+        </div>
+
+    </div>
+
+    <div id="errorMessage" class="error" hidden>
+        <i class="bi bi-exclamation-circle fs-1"></i>
+        <h4 class="mt-3">Profile not available</h4>
+        <p id="errorText">Unable to load this profile.</p>
+    </div>
+
+</div>
+
+<footer>
+    © 2026 Campus Achieve. All rights reserved.
+</footer>
+
+<script>
+
+function escapeHTML(value) {
+    return String(value ?? "").replace(/[&<>"']/g, char => ({
+        "&": "&amp;",
+        "<": "&lt;",
+        ">": "&gt;",
+        '"': "&quot;",
+        "'": "&#39;"
+    })[char]);
+}
+
+function loadFacultyAchievements(achievements) {
+
+    const container = document.getElementById("achievementList");
+    const count = document.getElementById("achievementCount");
+
+    achievements = Array.isArray(achievements) ? achievements : [];
+
+    count.textContent = achievements.length +
+        (achievements.length === 1 ? " achievement" : " achievements");
+
+    if (achievements.length === 0) {
+        container.innerHTML = `
+            <div class="col-12">
+                <p class="text-muted">No faculty achievements uploaded yet.</p>
+            </div>
+        `;
+        return;
+    }
+
+    container.innerHTML = achievements.map(item => {
+
+        const title = escapeHTML(item.title || "Untitled");
+        const category = escapeHTML(item.category || "Other");
+        const date = escapeHTML(item.achievementDate || "Not specified");
+        const certificateUrl = item.certificateUrl;
+
+        return `
+            <div class="col-md-6">
+                <div class="achievement-card">
+                    <h6>${title}</h6>
+                    <p class="mb-1">${category}</p>
+
+                    <p class="achievement-meta">
+                        <i class="bi bi-calendar3"></i> ${date}
+                    </p>
+
+                    ${
+                        certificateUrl
+                        ? `
+                            <a href="${escapeHTML(certificateUrl)}"
+                               target="_blank"
+                               rel="noopener noreferrer"
+                               class="btn btn-outline-primary btn-sm">
+                                <i class="bi bi-file-earmark-pdf"></i>
+                                View Certificate
+                            </a>
+                          `
+                        : `<span class="text-muted">No certificate uploaded</span>`
+                    }
+                </div>
+            </div>
+        `;
+
+    }).join("");
+}
+
+async function loadPublicProfile() {
+
+    const params = new URLSearchParams(window.location.search);
+    const userId = params.get("id");
+
+    const loading = document.getElementById("loading");
+    const content = document.getElementById("profileContent");
+    const errorBox = document.getElementById("errorMessage");
+
+    if (!userId) {
+        loading.hidden = true;
+        errorBox.hidden = false;
+
+        document.getElementById("errorText").textContent =
+            "No user ID was provided in the URL.";
+
+        return;
+    }
+
+    try {
+
+        const response = await fetch(
+            "/api/users/" + encodeURIComponent(userId) + "/profile",
+            {
+                method: "GET",
+                headers: {
+                    "Accept": "application/json"
+                }
+            }
+        );
+
+        if (!response.ok) {
+            throw new Error(
+                "Profile request failed (HTTP " + response.status + ")."
+            );
+        }
+
+        const profile = await response.json();
+
+        const name = profile.name || "Faculty";
+        const email = profile.email || "Not available";
+        const department = profile.department || "Not specified";
+        const id = profile.id || userId;
+
+        document.getElementById("profileAvatar").textContent =
+            name.trim().charAt(0).toUpperCase() || "F";
+
+        document.getElementById("profileName").textContent = name;
+        document.getElementById("profileEmail").textContent = email;
+
+        document.getElementById("detailName").textContent = name;
+        document.getElementById("detailEmail").textContent = email;
+        document.getElementById("detailId").textContent = id;
+        document.getElementById("detailDepartment").textContent =
+            department;
+
+        loading.hidden = true;
+        content.hidden = false;
+
+        loadFacultyAchievements(profile.achievements);
+
+    } catch (error) {
+
+        loading.hidden = true;
+        errorBox.hidden = false;
+
+        document.getElementById("errorText").textContent =
+            error.message;
+    }
+}
+
+document.addEventListener("DOMContentLoaded", loadPublicProfile);
+
+</script>
+
+</body>
+</html>
